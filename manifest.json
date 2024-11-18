@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Profile Card Manager",
+    "version": "1.0",
+    "description": "Store and manage personal profiles, social media links, and documents",
+    "permissions": [
+      "storage"
+    ],
+    "action": {
+      "default_popup": "index.html"
+    },
+    "icons": {
+      "48": "icon.png"
+    },
+    "web_accessible_resources": [{
+      "resources": ["*.js", "*.css", "*.html"],
+      "matches": ["<all_urls>"]
+    }],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    }
+}
