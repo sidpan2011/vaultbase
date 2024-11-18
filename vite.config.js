@@ -5,6 +5,9 @@ import { crx } from '@crxjs/vite-plugin';
 import manifest from './manifest.json';
 import path from 'path';
 
+// Check if we're in production and on Vercel
+const isVercel = process.env.VERCEL === '1';
+
 export default defineConfig({
   resolve: {
     alias: {
@@ -13,10 +16,8 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    crx({
-      manifest,
-      contentScripts: false
-    })
+    // Only use CRXJS plugin when not on Vercel
+    ...(!isVercel ? [crx({ manifest, contentScripts: false })] : [])
   ],
   build: {
     rollupOptions: {
@@ -45,7 +46,7 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom'],
-    exclude: ['@crxjs/vite-plugin']
+    exclude: isVercel ? [] : ['@crxjs/vite-plugin']
   },
   server: {
     port: 5173,
